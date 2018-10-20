@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset= "utf-8">
+<html>
+<head>
+	<title>Sphere Modeling</title>
+	<style>
+		body { margin: 0; }
+	</style>
+</head>
+
+<body>
+
+	<script src="dynamics.js"></script>
+	<script src="three.js"></script>
+
+	<script>
+		var scene = new THREE.Scene();
+		var color = new THREE.Color(0xA9A9A9);
+		scene.background= color;
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+		var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+		var material = new THREE.MeshBasicMaterial( {color: 0x000000} );
+		var meshMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, emissive: 0x000000, side: THREE.DoubleSide, flatShading: true, wireframe: true } );
+
+		var sphere = new THREE.Mesh( geometry, meshMaterial );
+
+		scene.add( sphere );
+
+		camera.position.z = 10;
+
+		var lights = [];
+		lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+		lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+		lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+		lights[ 0 ].position.set( 0, 200, 0 );
+		lights[ 1 ].position.set( 100, 200, 100 );
+		lights[ 2 ].position.set( - 100, - 200, - 100 );
+		scene.add( lights[ 0 ] );
+		scene.add( lights[ 1 ] );
+		scene.add( lights[ 2 ] );
+
+
+		var animate = function () {
+			requestAnimationFrame( animate );
+			sphere.rotation.x += 0.01;
+			sphere.rotation.y += 0.01;
+			renderer.render( scene, camera );
+		};
+		animate();
+	</script>
+</body>
+</html>
